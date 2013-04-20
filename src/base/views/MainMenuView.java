@@ -28,12 +28,10 @@ public class MainMenuView extends View {
 
 	private Image background;
 	MouseOverArea butOption, butQuitter, butCredits;
-	
-	private boolean wasOverJouer = false;
 
 	@Override
 	public void initResources() {
-		//background = ResourceManager.getImage("background_main_menu_view").getScaledCopy(container.getWidth(), container.getHeight());
+		background = ResourceManager.getImage("background_main_menu_view").getScaledCopy(container.getWidth(), container.getHeight());
 
 		Image tmp = ResourceManager.getImage("MenuOption");
 		
@@ -46,12 +44,11 @@ public class MainMenuView extends View {
 		butOption = new MouseOverArea(container, ResourceManager.getImage("MenuOption"), x, y+haut, larg, haut);
 		butOption.setMouseOverImage(ResourceManager.getImage("MenuOptionOver"));
 		
-		butQuitter = new MouseOverArea(container, ResourceManager.getImage("MenuQuitter"), x, y+haut*2-25, larg, haut);
-		butQuitter.setMouseOverImage(ResourceManager.getImage("MenuQuitterOver"));
-		
-		butCredits = new MouseOverArea(container, ResourceManager.getImage("MenuCredits"), x, y+haut*3-50, larg, haut);
+		butCredits = new MouseOverArea(container, ResourceManager.getImage("MenuCredits"), x, y+haut*2-25, larg, haut);
 		butCredits.setMouseOverImage(ResourceManager.getImage("MenuCreditsOver"));
 		
+		butQuitter = new MouseOverArea(container, ResourceManager.getImage("MenuQuitter"), x, y+haut*4-50, larg, haut);
+		butQuitter.setMouseOverImage(ResourceManager.getImage("MenuQuitterOver"));
 	}
 
 	@Override
