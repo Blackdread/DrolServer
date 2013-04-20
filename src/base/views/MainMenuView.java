@@ -33,7 +33,7 @@ public class MainMenuView extends View {
 
 	@Override
 	public void initResources() {
-		//background = ResourceManager.getImage("background_main_menu_view").getScaledCopy(container.getWidth(), container.getHeight());
+		background = ResourceManager.getImage("background_main_menu_view").getScaledCopy(container.getWidth(), container.getHeight());
 
 		Image tmp = ResourceManager.getImage("MenuOption");
 		
