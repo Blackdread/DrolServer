@@ -7,10 +7,15 @@ public class Salon extends Partie {
 		
 	}
 
-	@Override
+	
 	public void playerJoinGame(ClientServer newPlayer) {
-		// TODO Auto-generated method stub
-
+		super.playerJoinGame(newPlayer);
+		
+	}
+	
+	@Override
+	public void playerLeftGame(ClientServer leavePlayer){
+		super.playerLeftGame(leavePlayer);
 	}
 
 }

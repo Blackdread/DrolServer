@@ -23,4 +23,8 @@ public abstract class Partie {
 	public void playerJoinGame(ClientServer newPlayer){
 		listeDesJoueursDansLaPartie.addClientServer(newPlayer);
 	}
+	
+	public void playerLeftGame(ClientServer leavePlayer){
+		listeDesJoueursDansLaPartie.removeClientServer(leavePlayer);
+	}
 }
