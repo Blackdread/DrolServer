@@ -6,6 +6,10 @@ import java.util.HashMap;
 
 import base.utils.Configuration;
 
+/**
+*
+* @author Yoann CAPLAIN
+*/
 public class Server implements Runnable{
 
 	private String nameServer;
@@ -33,7 +37,7 @@ public class Server implements Runnable{
 	            try{
 		            ClientServer client = new ClientServer(this, s_server.accept(), i);
 		            System.out.println("Nouveau client: "+nameServer+" et id "+i);
-		            hashClients.put(i, client);
+		            addClient(client);
 		            i++;
 	            
 	            }catch(Exception e){
@@ -58,19 +62,27 @@ public class Server implements Runnable{
 		}
 	}
 	
-	public void creePartie(ClientServer host){
+	synchronized public void creePartie(ClientServer host){
 		Partie tmp = new Salon(host);
 		hashPartie.put(ID_partie, tmp);
 		ID_partie++;
 		host.setPartie(tmp);
 	}
-	public void rejoindrePartie(final int idPartie, ClientServer host){
+	synchronized public void rejoindrePartie(final int idPartie, ClientServer host){
 		Partie tmp = hashPartie.get(idPartie);
 		if(tmp != null){
 			tmp.playerJoinGame(host);
 			host.setPartie(tmp);
 		}
 	}
+	
+	synchronized public void addClient(ClientServer client){
+    	hashClients.put(client.getId(), client);
+    }
+	
+    synchronized public void removeClient(int id){
+    	hashClients.remove(id);
+    }
 	
     public String getNameServer() {
         return nameServer;
@@ -86,9 +98,5 @@ public class Server implements Runnable{
 
     public void setPort(int port) {
         this.port = port;
-    }
-    
-    synchronized public void removeClient(int id){
-    	hashClients.remove(id);
     }
 }

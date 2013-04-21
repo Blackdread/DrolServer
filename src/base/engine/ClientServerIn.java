@@ -5,7 +5,7 @@ import java.net.Socket;
 
 /**
  *
- * @author 
+ * @author Yoann CAPLAIN
  */
 public class ClientServerIn implements Runnable{
     private Socket s;
@@ -58,6 +58,6 @@ public class ClientServerIn implements Runnable{
         	}
         	
         }catch(Exception e){e.printStackTrace();}
-        System.out.println("clienIn fin");
+        System.out.println("clienIn fin "+clientServer.getId());
     }
 }

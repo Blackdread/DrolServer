@@ -1,5 +1,9 @@
 package base.engine;
 
+/**
+*
+* @author Yoann CAPLAIN
+*/
 public class Jeu extends Partie {
 
 	public Jeu(ClientServer host) {

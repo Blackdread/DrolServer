@@ -2,6 +2,10 @@ package base.engine;
 
 import java.net.Socket;
 
+/**
+*
+* @author Yoann CAPLAIN
+*/
 public class ClientServer {
 	
     private int id;

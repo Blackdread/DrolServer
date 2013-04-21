@@ -4,6 +4,10 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+/**
+*
+* @author Yoann CAPLAIN
+*/
 public class Diffusion {
 
 	private HashMap<Integer, ClientServer> hash = new HashMap<Integer, ClientServer>();

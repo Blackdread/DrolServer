@@ -37,7 +37,7 @@ public class OptionsView extends View {
 
 	private Image background, listeElement, listeElementOver;;
 
-	MouseOverArea butQuitter, butFullscreen;
+	private MouseOverArea butQuitter, butFullscreen;
 	private ListeDeroulante listeDerTailleScreen;
 	private RoundedRectangle zone[] = new RoundedRectangle[3];
 	

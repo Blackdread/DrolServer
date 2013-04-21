@@ -28,7 +28,7 @@ public class ClientServerOut implements Runnable{
            
             
         }catch(Exception e){e.printStackTrace();}
-         System.out.println("fin clientOut");   
+         System.out.println("fin clientOut "+clientServer.getId());   
     }
     
 }

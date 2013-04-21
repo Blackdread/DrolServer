@@ -1,5 +1,9 @@
 package base.engine;
 
+/**
+*
+* @author Yoann CAPLAIN
+*/
 public class Salon extends Partie {
 
 	public Salon(ClientServer host) {
