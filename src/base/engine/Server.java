@@ -63,10 +63,12 @@ public class Server implements Runnable{
 	}
 	
 	synchronized public void creePartie(ClientServer host){
-		Partie tmp = new Salon(host);
-		hashPartie.put(ID_partie, tmp);
+		Runnable tmp = new Salon(host, ID_partie);
+		hashPartie.put(ID_partie, (Partie) tmp);
 		ID_partie++;
-		host.setPartie(tmp);
+		host.setPartie((Partie)tmp);
+		Thread tmp2 = new Thread(tmp);
+		tmp2.start();
 	}
 	synchronized public void rejoindrePartie(final int idPartie, ClientServer host){
 		Partie tmp = hashPartie.get(idPartie);
@@ -74,6 +76,17 @@ public class Server implements Runnable{
 			tmp.playerJoinGame(host);
 			host.setPartie(tmp);
 		}
+	}
+	
+	synchronized public void lancerPartie(Salon s){
+		Runnable tmp = new Jeu(s);
+		hashPartie.remove(((Partie)tmp).getId());
+		hashPartie.put(((Partie)tmp).getId(), (Partie) tmp);
+		Thread t = new Thread(tmp);
+		t.start();
+		
+		
+		s.stopPartie();
 	}
 	
 	synchronized public void addClient(ClientServer client){

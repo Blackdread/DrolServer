@@ -40,5 +40,9 @@ public class Diffusion {
     synchronized public void removeClientServer(ClientServer client){
     	hash.remove(client.getId());
     }
+    
+    synchronized public int size(){
+    	return hash.size();
+    }
 
 }

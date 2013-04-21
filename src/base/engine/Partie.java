@@ -1,11 +1,15 @@
 package base.engine;
 
+import org.lwjgl.Sys;
+
 /**
 *
 * @author Yoann CAPLAIN
 */
-public abstract class Partie {
+public abstract class Partie implements Runnable{
 
+	protected int id;
+	
 	/**
 	 * Master of the game
 	 * Gere les options etc
@@ -13,11 +17,29 @@ public abstract class Partie {
 	protected ClientServer host;
 	protected EngineManager engineManager = new EngineManager();
 	
-	protected Diffusion listeDesJoueursDansLaPartie = new Diffusion();;
+	protected Diffusion listeDesJoueursDansLaPartie = new Diffusion();
 	
-	public Partie(ClientServer host){
+	protected boolean continuer = true;
+	
+	public Partie(ClientServer host, int id){
 		this.host = host;
 		playerJoinGame(host);
+	}
+	
+	@Override
+	public void run(){
+		long temp = getTime();
+		long stockDelta;
+		
+		while(continuer){
+			stockDelta = getTime() - temp;
+			if((int)stockDelta >= 10){
+				
+				engineManager.update((int)stockDelta);
+				
+				temp = getTime();
+			}
+		}
 	}
 	
 	/**
@@ -26,12 +48,46 @@ public abstract class Partie {
 	 */
 	public void playerJoinGame(ClientServer newPlayer){
 		listeDesJoueursDansLaPartie.addClientServer(newPlayer);
-		// TODO si la partie est vide ou pas d'host, le 1er a entre devient l'host
-		// Donc finalement pas besoin d'envoyer dans l'instanciation le host
 	}
 	
 	public void playerLeftGame(ClientServer leavePlayer){
 		listeDesJoueursDansLaPartie.removeClientServer(leavePlayer);
 		// TODO si c le host qui part, il faut donner le host a un autre joueur, (si la partie est vide, elle est supprimer ??)
+	}
+	
+	public void stopPartie(){
+		continuer = false;
+	}
+	
+    public long getTime() {
+	    return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+
+	public ClientServer getHost() {
+		return host;
+	}
+
+	public EngineManager getEngineManager() {
+		return engineManager;
+	}
+
+	public Diffusion getListeDesJoueursDansLaPartie() {
+		return listeDesJoueursDansLaPartie;
+	}
+
+	public boolean isContinuer() {
+		return continuer;
+	}
+
+	public void setContinuer(boolean continuer) {
+		this.continuer = continuer;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

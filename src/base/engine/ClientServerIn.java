@@ -49,6 +49,13 @@ public class ClientServerIn implements Runnable{
 	        		case MessageKey.I_LEAVE_GAME:
 	        			// TODO
 	        			break;
+	        		case MessageKey.I_LAUNCH_GAME:
+	        			if(clientServer.getPartie() != null)
+	        				if(ob2.i_data.containsKey(MessageKey.P_ID))
+	    					{
+	        					
+	    					}
+	        			break;
 	        		default:
 	        			if(clientServer.getPartie() != null)
 	        				clientServer.getPartie().engineManager.receiveMessage(ob2);
@@ -57,7 +64,7 @@ public class ClientServerIn implements Runnable{
 	        	}
         	}
         	
-        }catch(Exception e){e.printStackTrace();}
+        }catch(Exception e){e.printStackTrace();}	// TODO envoyer playerLeftGame
         System.out.println("clienIn fin "+clientServer.getId());
     }
 }
