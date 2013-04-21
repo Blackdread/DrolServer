@@ -2,7 +2,9 @@ package base.engine;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import base.utils.Configuration;
 
@@ -97,6 +99,11 @@ public class Server implements Runnable{
     	hashClients.remove(id);
     }
 	
+    @Deprecated
+    synchronized public Collection<Partie> getPartie(){
+    	return hashPartie.values();
+    }
+    
     public String getNameServer() {
         return nameServer;
     }

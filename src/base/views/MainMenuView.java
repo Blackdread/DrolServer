@@ -27,7 +27,7 @@ import base.utils.ResourceManager;
 public class MainMenuView extends View {
 
 	private Image background;
-	MouseOverArea butOption, butQuitter, butCredits;
+	MouseOverArea butAdmin, butOption, butQuitter, butCredits;
 
 	@Override
 	public void initResources() {
@@ -40,6 +40,9 @@ public class MainMenuView extends View {
 		
 		int x = container.getWidth() / 2 - larg/2;
 		int y = container.getHeight() / 2 - haut/2 * 4;
+		
+		butAdmin = new MouseOverArea(container, ResourceManager.getImage("fullscreen"), x, y, larg, haut);
+		butAdmin.setMouseOverImage(ResourceManager.getImage("fullscreenOver"));
 		
 		butOption = new MouseOverArea(container, ResourceManager.getImage("MenuOption"), x, y+haut, larg, haut);
 		butOption.setMouseOverImage(ResourceManager.getImage("MenuOptionOver"));
@@ -54,7 +57,7 @@ public class MainMenuView extends View {
 	@Override
 	public void render(GameContainer container, StateBasedGame sbgame, Graphics g) throws SlickException {	
 		g.drawImage(background, 0, 0);
-
+		butAdmin.render(container, g);
 		butOption.render(container, g);
 		butQuitter.render(container, g);
 		butCredits.render(container, g);
@@ -81,7 +84,9 @@ public class MainMenuView extends View {
 	@Override
 	public void mousePressed(int button, int x, int y) {
 		super.mousePressed(button, x, y);
-		if(butOption.isMouseOver())
+		if(butAdmin.isMouseOver())
+			gotoAdministration();
+		else if(butOption.isMouseOver())
 			gotoOption();
 		else if(butCredits.isMouseOver())
 			gotoCredits();
@@ -90,6 +95,10 @@ public class MainMenuView extends View {
 		
 	}
 
+	private void gotoAdministration() {
+		container.setMouseGrabbed(false);
+		game.enterState(Game.ADMINISTRATION_VIEW_ID, new FadeOutTransition(), new FadeInTransition());
+	}
 	private void gotoOption() {
 		container.setMouseGrabbed(false);
 		game.enterState(Game.OPTIONS_VIEW_ID, new FadeOutTransition(), new FadeInTransition());

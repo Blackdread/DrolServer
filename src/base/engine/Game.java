@@ -61,6 +61,7 @@ public class Game extends StateBasedGame {
 		addState(new MainMenuView());
 		addState(new OptionsView());
 		addState(new CreditsView());
+		addState(new AdministrationView());
 		
 		addState(new LastView());
 		
