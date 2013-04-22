@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import base.utils.Configuration;
 
@@ -24,6 +23,11 @@ public class Server implements Runnable{
     private HashMap<Integer, Partie> hashPartie = new HashMap<Integer, Partie>();
     
     private boolean continuer = true;
+    
+    /**
+     * -1 = no limits
+     */
+    private int maxPartieAtTheSameTime = -1;
 	
 	public Server(String nameServer){
 		this.nameServer = nameServer;
@@ -65,12 +69,14 @@ public class Server implements Runnable{
 	}
 	
 	synchronized public void creePartie(ClientServer host){
-		Runnable tmp = new Salon(host, ID_partie);
-		hashPartie.put(ID_partie, (Partie) tmp);
-		ID_partie++;
-		host.setPartie((Partie)tmp);
-		Thread tmp2 = new Thread(tmp);
-		tmp2.start();
+		if(maxPartieAtTheSameTime == -1 || hashPartie.size() <= maxPartieAtTheSameTime){
+			Runnable tmp = new Salon(host, ID_partie);
+			hashPartie.put(ID_partie, (Partie) tmp);
+			ID_partie++;
+			host.setPartie((Partie)tmp);
+			Thread tmp2 = new Thread(tmp);
+			tmp2.start();
+		}
 	}
 	synchronized public void rejoindrePartie(final int idPartie, ClientServer host){
 		Partie tmp = hashPartie.get(idPartie);
@@ -119,4 +125,12 @@ public class Server implements Runnable{
     public void setPort(int port) {
         this.port = port;
     }
+
+	public int getMaxPartieAtTheSameTime() {
+		return maxPartieAtTheSameTime;
+	}
+
+	public void setMaxPartieAtTheSameTime(int maxPartieAtTheSameTime) {
+		this.maxPartieAtTheSameTime = maxPartieAtTheSameTime;
+	}
 }
