@@ -27,6 +27,11 @@ public class ClientServer {
         this.id = id;
         in = new ClientServerIn(s,this);
         out = new ClientServerOut(s,this);
+        
+        Thread tIn = new Thread(in);
+        tIn.start();
+        Thread tOut = new Thread(out);
+        tOut.start();
     }
 
 	public void setPartie(Partie partie) {
