@@ -16,19 +16,12 @@ public class Diffusion {
 		
 	}
 	
-    public void diffTousSaufEmetteur(String m, int id){
-        PrintWriter tmp;
+	synchronized public void diffTousSaufEmetteur(Message mes, int id){
         for(Entry<Integer, ClientServer> v : hash.entrySet()){
             if(v != null && v.getValue() != null)
                 if(v.getKey() != id)
-                    if(v.getValue().getS() != null){
-                        try {
-                            tmp = new PrintWriter(new OutputStreamWriter(v.getValue().getS().getOutputStream()));
-                            tmp.println(""+m);
-                            tmp.flush();
-                        } catch (IOException ex) {
-                        ex.printStackTrace();
-                        }
+                    if(v.getValue().getOut() != null){
+                    	v.getValue().getOut().receiveMessage(mes);
                     }
         }
         

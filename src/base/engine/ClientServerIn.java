@@ -16,13 +16,6 @@ public class ClientServerIn implements Runnable{
     	s = soc;
     	this.clientServer = clientServer;
     }
-      
-    public ClientServerIn(String addr, int port){
-        try{
-        	s = new Socket(addr, port);
-        }catch(Exception e){e.printStackTrace();}
-    }
-    
     
     public void run(){
         System.out.println("clientIn demarrer");
@@ -58,7 +51,11 @@ public class ClientServerIn implements Runnable{
 	        			break;
 	        		default:
 	        			if(clientServer.getPartie() != null)
+	        			{
+	        				ob2.i_data.put(MessageKey.P_ID_CLIENT, clientServer.getId());
 	        				clientServer.getPartie().engineManager.receiveMessage(ob2);
+	        				clientServer.getPartie().engineManager.getNetworkEngine().receiveMessage(ob2);
+	        			}
 	        			break;
 	        		}
 	        	}
