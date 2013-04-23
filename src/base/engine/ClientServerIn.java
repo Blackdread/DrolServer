@@ -44,18 +44,16 @@ public class ClientServerIn implements Runnable{
 	        			break;
 	        		case MessageKey.I_LAUNCH_GAME:
 	        			if(clientServer.getPartie() != null)
-	        				if(ob2.i_data.containsKey(MessageKey.P_ID_CLIENT))
-	    					{
-	        					//L'host veut lancer la partie
-	        					if(ob2.i_data.get(MessageKey.P_ID_CLIENT) == clientServer.getPartie().getHost().getId())
-	        					{
-	        						clientServer.getServer().lancerPartie((Salon) clientServer.getPartie());
-	        						Message mes = new Message();
-	        						mes.instruction = MessageKey.I_CHANGE_VIEW_TO_LOADING;
-	        						mes.engine = EngineManager.NETWORK_ENGINE;
-	        						clientServer.getPartie().getEngineManager().receiveMessage(mes);
-	        					}
-	    					}
+        					//L'host veut lancer la partie
+        					if(clientServer.getId() == clientServer.getPartie().getHost().getId())
+        					{
+        						clientServer.getServer().lancerPartie((Salon) clientServer.getPartie());
+        						Message mes = new Message();
+        						mes.instruction = MessageKey.I_CHANGE_VIEW_TO_LOADING;
+        						mes.engine = EngineManager.NETWORK_ENGINE;
+        						clientServer.getPartie().getEngineManager().receiveMessage(mes);
+        					}
+	    					
 	        			break;
 	        		default:
 	        			if(clientServer.getPartie() != null)
