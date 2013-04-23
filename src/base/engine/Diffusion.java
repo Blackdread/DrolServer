@@ -1,6 +1,5 @@
 package base.engine;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -15,6 +14,15 @@ public class Diffusion {
 	public Diffusion(){
 		
 	}
+	
+	synchronized public void diffTous(Message mes){
+        for(Entry<Integer, ClientServer> v : hash.entrySet()){
+            if(v != null && v.getValue() != null)
+                if(v.getValue().getOut() != null)
+                	v.getValue().getOut().receiveMessage(mes);
+        }
+        
+    }
 	
 	synchronized public void diffTousSaufEmetteur(Message mes, int id){
         for(Entry<Integer, ClientServer> v : hash.entrySet()){

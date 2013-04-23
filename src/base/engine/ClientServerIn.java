@@ -59,9 +59,19 @@ public class ClientServerIn implements Runnable{
 	        			break;
 	        		}
 	        	}
+	        	//*
+	        	try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+	        	//*/
         	}
         	
-        }catch(Exception e){e.printStackTrace();}	// TODO envoyer playerLeftGame
+        }catch(Exception e){
+        	e.printStackTrace();
+        	continuer=false;
+        }	// TODO envoyer playerLeftGame
         System.out.println("clienIn fin "+clientServer.getId());
     }
 }

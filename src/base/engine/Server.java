@@ -16,6 +16,7 @@ public class Server implements Runnable{
 	private String nameServer;
 	private int port = Configuration.getPort();
     private ServerSocket s_server;
+    private boolean isServerOn = false;
     
     private HashMap<Integer, ClientServer> hashClients = new HashMap<Integer, ClientServer>();
     
@@ -38,28 +39,30 @@ public class Server implements Runnable{
 	
 	public void run(){
 		 System.out.println("Debut du serveur: "+nameServer);
-	        int i = 0;
-	        while(continuer){
-	            try{
-		            ClientServer client = new ClientServer(this, s_server.accept(), i);
-		            System.out.println("Nouveau client: "+nameServer+" et id "+i);
-		            addClient(client);
-		            i++;
-	            
-	            }catch(Exception e){
-	            	e.printStackTrace();
-	            }
-	        }
+	     int i = 0;
+	     isServerOn = true;
+	     while(continuer){
+            try{
+	            ClientServer client = new ClientServer(this, s_server.accept(), i);
+	            System.out.println("Nouveau client: "+nameServer+" et id "+i);
+	            addClient(client);
+	            i++;
+            
+            }catch(Exception e){
+            	e.printStackTrace();
+            }
+	     }
 	        
-	        try{
-	        	s_server.close();
-	        }catch(Exception e){e.printStackTrace();}
-	        System.out.println("Fin du serveur: "+nameServer);
+        try{
+        	s_server.close();
+        }catch(Exception e){e.printStackTrace();}
+        System.out.println("Fin du serveur: "+nameServer);
 	}
 	
 	// TODO supprimer tous les thread qui ont ete instancie
 	public void stopServer(){
 		continuer = false;
+		isServerOn = false;
 		try {
 			s_server.close();
 		} catch (IOException e) {
@@ -69,6 +72,7 @@ public class Server implements Runnable{
 	}
 	
 	synchronized public void creePartie(ClientServer host){
+		// TODO envoyer un message a celui qui a voulu si ca c fait ou pas
 		if(maxPartieAtTheSameTime == -1 || hashPartie.size() <= maxPartieAtTheSameTime){
 			Runnable tmp = new Salon(host, ID_partie);
 			hashPartie.put(ID_partie, (Partie) tmp);
@@ -132,5 +136,9 @@ public class Server implements Runnable{
 
 	public void setMaxPartieAtTheSameTime(int maxPartieAtTheSameTime) {
 		this.maxPartieAtTheSameTime = maxPartieAtTheSameTime;
+	}
+
+	public synchronized boolean isServerOn() {
+		return isServerOn;
 	}
 }

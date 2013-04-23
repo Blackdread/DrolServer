@@ -77,7 +77,9 @@ public class AdministrationView extends View {
 		int nb = 0;
 		if(server != null){
 			nb = server.getPartie().size();
-		}
+			g.drawString("Server : ON", 5, 5);
+		}else
+			g.drawString("Server : OFF", 5, 5);
 		g.drawString("Listes des parties ouvertes : "+nb, shapeListeServers.getX()+shapeListeServers.getWidth()/2-container.getDefaultFont().getWidth("Listes des parties ouvertes :"+nb)/2, shapeListeServers.getY()-container.getDefaultFont().getHeight("Listes des parties ouvertes :"+nb) - 2);
 		
 		g.setDrawMode(Graphics.MODE_COLOR_MULTIPLY);
