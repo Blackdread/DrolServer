@@ -43,6 +43,10 @@ public class Jeu extends Partie {
 				} catch (InterruptedException e) {e.printStackTrace();}
 			}
 			
+			Message mes = new Message();
+			mes.instruction = MessageKey.I_CHANGE_VIEW_TO_GAME;
+			mes.engine = EngineManager.NETWORK_ENGINE;
+			engineManager.receiveMessage(mes);
 			super.run();
 		}else
 			System.err.println("Level null dans Server lors du run du jeu");
