@@ -42,19 +42,19 @@ public class AdministrationView extends View {
 		int haut = tmp.getHeight();
 		int yBut = y - haut - MARGIN;
 		
-		listeServers = new ListeDeroulante(container, ResourceManager.getImage("transparent"), 100 , 50);
-		listeServers.setScrolled(true);
-		listeServers.setMaxElementsToDraw(60);
+		shapeListeServers = new Rectangle(MARGIN, 50, x/2 - MARGIN - 10, yBut - 50);
 		
+		listeServers = new ListeDeroulante(container, ResourceManager.getImage("transparent"), (int)shapeListeServers.getX()+5 , (int)shapeListeServers.getY()+5);
+		listeServers.setScrolled(true);
+		listeServers.setMaxElementsToDraw((int)shapeListeServers.getHeight()/20);
+	
 		butRetour = new MouseOverArea(container, ResourceManager.getImage("butRetour"), MARGIN, yBut, larg, haut);
 		butRetour.setMouseOverImage(ResourceManager.getImage("butRetourOver"));
 		
 		butCreerServer = new MouseOverArea(container, tmp, tmp.getWidth() + MARGIN*2, yBut, larg, haut);
 		butCreerServer.setMouseOverImage(ResourceManager.getImage("MenuJouerOver"));
 		
-		shapeListeServers = new Rectangle(MARGIN, 50, x/2 - MARGIN - 10, yBut - 50);
-		
-		timerRefreshServers = new Timer(5000);
+		timerRefreshServers = new Timer(7000);
 	}
 	
 	@Override
@@ -63,8 +63,11 @@ public class AdministrationView extends View {
 		
 		if(timerRefreshServers.isTimeComplete()){
 			if(server != null){
-				if(listeServers.size() != server.getPartie().size())
+				//if(listeServers.size() != server.getPartie().size()) -> enlever car c 
+				//vite fait et je veux aussi verifier si le nb de joueur est tjr bon sauf que je peux pas 
+				//acceder facilement a ce nb contenu dans la liste deroulante vu que c dans un String
 					mettreAJourListePartie();	// mode bourrin, on vide la liste et on refait
+				
 			}else
 				listeServers.clearList();
 			timerRefreshServers.resetTime();
@@ -135,7 +138,7 @@ public class AdministrationView extends View {
 			if(v != null){
 				listeServers.addElement(new ElementString(container, ResourceManager.getImage("transparent").getScaledCopy(10, 
 						container.getDefaultFont().getHeight("1")+2), 0,0,
-						"Id: "+v.getId()+" Nb joueurs"+v.getListeDesJoueursDansLaPartie().size()));
+						"Id: "+v.getId()+" Nb joueurs: "+v.getListeDesJoueursDansLaPartie().size()));
 			}
 	}
 

@@ -35,6 +35,28 @@ public class NetworkEngine extends Engine {
 		
 		return true;
 	}
+	
+	/**
+	 * Send a message to players to change his view to TransitionView
+	 */
+	public void sendToPlayersToChangeViewToTransition(){
+		Message mes = new Message();
+		mes.instruction = MessageKey.I_CHANGE_VIEW_TO_LOADING;
+		mes.engine = EngineManager.NETWORK_ENGINE;
+		//engineManager.receiveMessage(mes);
+		partie.getListeDesJoueursDansLaPartie().diffTous(mes);
+	}
+	
+	/**
+	 * Send a message to players to change his view to Game (InGameMultiView)
+	 */
+	public void sendToPlayersToChangeViewToGame(){
+		Message mes = new Message();
+		mes.instruction = MessageKey.I_CHANGE_VIEW_TO_GAME;
+		mes.engine = EngineManager.NETWORK_ENGINE;
+		//engineManager.receiveMessage(mes);
+		partie.getListeDesJoueursDansLaPartie().diffTous(mes);
+	}
 
 	public Partie getPartie() {
 		return partie;

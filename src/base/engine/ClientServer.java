@@ -1,5 +1,6 @@
 package base.engine;
 
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -34,6 +35,29 @@ public class ClientServer {
         tIn.start();
         Thread tOut = new Thread(out);
         tOut.start();
+    }
+    
+    public void clientDisconnected(){
+    	if(partie != null){
+    		partie.playerLeftGame(this);
+    		
+    		partie = null;
+    	}
+    	server.clientDisconnected(this);
+    	
+    	stopThreads();
+    	
+    	try {
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    
+    public void stopThreads(){
+    	in.setContinuer(false);
+    	out.setContinuer(false);
     }
 
 	public void setPartie(Partie partie) {

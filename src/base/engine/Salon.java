@@ -5,7 +5,7 @@ package base.engine;
 * @author Yoann CAPLAIN
 */
 public class Salon extends Partie {
-
+	
 	public Salon(ClientServer host, int id) {
 		super(host, id);
 		this.id = id;
@@ -18,6 +18,7 @@ public class Salon extends Partie {
 		continuer = true;
 	}
 	
+	@Override
 	public void playerJoinGame(ClientServer newPlayer) {
 		super.playerJoinGame(newPlayer);
 		

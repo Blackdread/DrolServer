@@ -8,6 +8,12 @@ public class Jeu extends Partie {
 
 	protected Barriere barriereAttenteJoueurs;
 	
+	/**
+	 * True means players are playing (passed loading transition)
+	 */
+	protected boolean playingGame = false;
+	
+	
 	@Deprecated
 	public Jeu(ClientServer host, int id) {
 		super(host, id);
@@ -43,10 +49,10 @@ public class Jeu extends Partie {
 				} catch (InterruptedException e) {e.printStackTrace();}
 			}
 			
-			Message mes = new Message();
-			mes.instruction = MessageKey.I_CHANGE_VIEW_TO_GAME;
-			mes.engine = EngineManager.NETWORK_ENGINE;
-			engineManager.receiveMessage(mes);
+			playingGame = true;
+			
+			engineManager.getNetworkEngine().sendToPlayersToChangeViewToGame();
+			
 			super.run();
 		}else
 			System.err.println("Level null dans Server lors du run du jeu");
@@ -69,6 +75,15 @@ public class Jeu extends Partie {
 		super.playerLeftGame(leavePlayer);
 		barriereAttenteJoueurs.decrementMaxValue();
 		
+	}
+	
+	synchronized public void playerEndedLoading(ClientServer player){
+		barriereAttenteJoueurs.incrementCompteur();
+		// TODO notifier les autres client que le player a fini le loading
+	}
+
+	public synchronized boolean isPlayingGame() {
+		return playingGame;
 	}
 
 }

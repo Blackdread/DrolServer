@@ -82,12 +82,20 @@ public class Server implements Runnable{
 			tmp2.start();
 		}
 	}
-	synchronized public void rejoindrePartie(final int idPartie, ClientServer host){
+	/**
+	 * 
+	 * @param idPartie id partie
+	 * @param client ClientServer
+	 * @return true if the client could join the game
+	 */
+	synchronized public boolean rejoindrePartie(final int idPartie, ClientServer client){
 		Partie tmp = hashPartie.get(idPartie);
 		if(tmp != null){
-			tmp.playerJoinGame(host);
-			host.setPartie(tmp);
+			tmp.playerJoinGame(client);
+			client.setPartie(tmp);
+			return true;
 		}
+		return false;
 	}
 	
 	synchronized public void lancerPartie(Salon s){
@@ -99,6 +107,10 @@ public class Server implements Runnable{
 		
 		
 		s.stopPartie();
+	}
+	
+	synchronized public void clientDisconnected(ClientServer client){
+		hashClients.remove(client.getId());
 	}
 	
 	synchronized public void addClient(ClientServer client){

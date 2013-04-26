@@ -37,7 +37,13 @@ public class ClientServerIn implements Runnable{
 	        			if(clientServer.getPartie() == null){
 	        				if(ob2.i_data.containsKey(MessageKey.P_ID))
 	    					{
-	    						clientServer.getServer().rejoindrePartie(ob2.i_data.get(MessageKey.P_ID), clientServer);
+	    						if(clientServer.getServer().rejoindrePartie(ob2.i_data.get(MessageKey.P_ID), clientServer)){
+	    							// TODO Quand le RMI ?? pour eviter ce genre de message...
+	    							Message mes = new Message();
+	    							mes.instruction = MessageKey.I_CHANGE_VIEW_TO_SALON;
+	    							
+	    							clientServer.getOut().receiveMessage(mes);
+	    						}
 	    						//TODO envoyer au client toute les informations sur la partie
 	    					}
 	        			}
@@ -45,16 +51,31 @@ public class ClientServerIn implements Runnable{
 	        		case MessageKey.I_LEAVE_GAME:
 	        			// TODO
 	        			break;
+	        		case MessageKey.I_CLIENT_END_LOADING:
+	        			if(clientServer.getPartie() != null && clientServer.getPartie() instanceof Jeu){
+	        				((Jeu)clientServer.getPartie()).playerEndedLoading(clientServer);
+	        				
+	        				if(((Jeu)clientServer.getPartie()).isPlayingGame()){// Les joueurs jouent deja, c qqun qui rejoins de cours de partie
+	        					
+	        				}
+	        			}
+	        			break;
 	        		case MessageKey.I_LAUNCH_GAME:
 	        			if(clientServer.getPartie() != null)
         					//L'host veut lancer la partie
         					if(clientServer.getId() == clientServer.getPartie().getHost().getId())
         					{
         						clientServer.getServer().lancerPartie((Salon) clientServer.getPartie());
-        						Message mes = new Message();
-        						mes.instruction = MessageKey.I_CHANGE_VIEW_TO_LOADING;
-        						mes.engine = EngineManager.NETWORK_ENGINE;
-        						clientServer.getPartie().getEngineManager().receiveMessage(mes);
+        						
+        						//*
+        			        	try {
+        							Thread.sleep(5);
+        						} catch (InterruptedException e) {
+        							e.printStackTrace();
+        						}
+        			        	//*/
+        						
+        						clientServer.getPartie().getEngineManager().getNetworkEngine().sendToPlayersToChangeViewToTransition();
         					}
 	        			break;
 	        		default:
@@ -82,7 +103,14 @@ public class ClientServerIn implements Runnable{
         }catch(Exception e){
         	e.printStackTrace();
         	continuer=false;
-        }	// TODO envoyer playerLeftGame
+        }
+		
+		clientServer.clientDisconnected();
+		
         System.out.println("clienIn fin "+clientServer.getId());
     }
+
+	public void setContinuer(boolean continuer) {
+		this.continuer = continuer;
+	}
 }

@@ -52,7 +52,8 @@ public class ClientServerOut implements Runnable{
 				} catch (IOException e) {
 					e.printStackTrace();
 					continuer=false;
-					System.out.println("fin clientOut "+clientServer.getId()+" arreter pour cause d'erreur sur le flux out");   
+					System.out.println("fin clientOut "+clientServer.getId()+" arreter pour cause d'erreur sur le flux out"); 
+					break;
 				}
         	}
         	//*
