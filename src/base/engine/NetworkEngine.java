@@ -2,7 +2,7 @@ package base.engine;
 
 /**
  * NetworkEngine server
- * @author Blackdread
+ * @author Yoann CAPLAIN
  *
  */
 public class NetworkEngine extends Engine {
@@ -18,10 +18,19 @@ public class NetworkEngine extends Engine {
 	public synchronized boolean processMessage() {
 		//while(!this.message_queue.isEmpty()){
 		if(!this.message_queue.isEmpty()){
-			Message mes = this.message_queue.poll();
-			engineManager.receiveMessage(mes);
-			if(mes.i_data.containsKey((MessageKey.P_ID_CLIENT)))
-				partie.getListeDesJoueursDansLaPartie().diffTousSaufEmetteur(mes, mes.i_data.get(MessageKey.P_ID_CLIENT));
+			Object mes = this.message_queue.poll();
+			
+			if(mes instanceof MessageTchat){
+				partie.getListeDesJoueursDansLaPartie().diffTous(mes);
+				System.out.println("tchat recu server");
+			}else
+				if(mes instanceof Message){
+					engineManager.receiveMessage((Message)mes);
+					if(((Message)mes).i_data.containsKey((MessageKey.P_ID_CLIENT)))
+						partie.getListeDesJoueursDansLaPartie().diffTousSaufEmetteur((Message)mes, ((Message)mes).i_data.get(MessageKey.P_ID_CLIENT));
+					System.out.println("message recu server");
+				}
+			
 		}else
 			return false;
 		

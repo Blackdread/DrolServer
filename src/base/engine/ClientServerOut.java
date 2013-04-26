@@ -16,17 +16,18 @@ public class ClientServerOut implements Runnable{
     private ClientServer clientServer;
     private boolean continuer = true;
     private ObjectOutputStream out;
-    private Queue<Message> message_queue = new LinkedList<Message>(); 
+    private Queue<Object> message_queue = new LinkedList<Object>(); 
     
     public ClientServerOut(Socket soc, ClientServer clientServer){
       s = soc;
       this.clientServer = clientServer;
     }
     
-    synchronized public void receiveMessage(Message mes){
+    synchronized public void receiveMessage(Object mes){
 		message_queue.add(mes);
+		System.out.println("clientOut recu");
 	}
-    synchronized private Message poll(){
+    synchronized private Object poll(){
     	return message_queue.poll();
     }
     synchronized private boolean isEmpty(){
@@ -46,6 +47,7 @@ public class ClientServerOut implements Runnable{
         	while(!isEmpty()){
         		try {
 					out.writeObject(poll());
+					System.out.println("clientOut envoyer");
 				} catch (IOException e) {
 					e.printStackTrace();
 					continuer=false;

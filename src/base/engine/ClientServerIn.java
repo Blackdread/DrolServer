@@ -64,6 +64,9 @@ public class ClientServerIn implements Runnable{
 	        			}
 	        			break;
 	        		}
+	        	}else{
+	        		clientServer.getPartie().engineManager.getNetworkEngine().receiveMessage(ob);
+	        		System.out.println("ClientServerIn recu server");
 	        	}
 	        	//*
 	        	try {

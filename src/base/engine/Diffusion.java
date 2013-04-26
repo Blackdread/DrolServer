@@ -15,7 +15,7 @@ public class Diffusion {
 		
 	}
 	
-	synchronized public void diffTous(Message mes){
+	synchronized public void diffTous(Object mes){
         for(Entry<Integer, ClientServer> v : hash.entrySet()){
             if(v != null && v.getValue() != null)
                 if(v.getValue().getOut() != null)
@@ -24,7 +24,7 @@ public class Diffusion {
         
     }
 	
-	synchronized public void diffTousSaufEmetteur(Message mes, int id){
+	synchronized public void diffTousSaufEmetteur(Object mes, int id){
         for(Entry<Integer, ClientServer> v : hash.entrySet()){
             if(v != null && v.getValue() != null)
                 if(v.getKey() != id)
