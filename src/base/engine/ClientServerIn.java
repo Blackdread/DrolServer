@@ -4,8 +4,10 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /**
- *
+ * 
  * @author Yoann CAPLAIN
+ * @author Nicolas DUPIN
+ * @since 18 04 2013
  */
 public class ClientServerIn implements Runnable{
     private Socket s;
@@ -65,8 +67,8 @@ public class ClientServerIn implements Runnable{
 	        			break;
 	        		}
 	        	}else{
-	        		clientServer.getPartie().engineManager.getNetworkEngine().receiveMessage(ob);
-	        		System.out.println("ClientServerIn recu server");
+	        		if(clientServer.getPartie() != null)
+	        			clientServer.getPartie().engineManager.getNetworkEngine().receiveMessage(ob);
 	        	}
 	        	//*
 	        	try {

@@ -57,6 +57,9 @@ public class ClientServer {
 	public ClientServerOut getOut() {
 		return out;
 	}
+	 /**
+     * Peut valoir null s'il n'est pas sur une partie
+     */
     public Partie getPartie() {
 		return partie;
 	}

@@ -8,7 +8,9 @@ import java.util.Queue;
 
 /**
  *
- * @author 
+ * @author Yoann CAPLAIN
+ * @author Nicolas DUPIN
+ * @since 18 04 2013
  */
 public class ClientServerOut implements Runnable{
     
