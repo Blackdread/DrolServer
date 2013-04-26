@@ -38,6 +38,7 @@ public class ClientServerIn implements Runnable{
 	        				if(ob2.i_data.containsKey(MessageKey.P_ID))
 	    					{
 	    						clientServer.getServer().rejoindrePartie(ob2.i_data.get(MessageKey.P_ID), clientServer);
+	    						//TODO envoyer au client toute les informations sur la partie
 	    					}
 	        			}
 	        			break;
@@ -55,7 +56,6 @@ public class ClientServerIn implements Runnable{
         						mes.engine = EngineManager.NETWORK_ENGINE;
         						clientServer.getPartie().getEngineManager().receiveMessage(mes);
         					}
-	    					
 	        			break;
 	        		default:
 	        			if(clientServer.getPartie() != null)

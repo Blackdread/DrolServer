@@ -22,7 +22,6 @@ public class NetworkEngine extends Engine {
 			
 			if(mes instanceof MessageTchat){
 				partie.getListeDesJoueursDansLaPartie().diffTous(mes);
-				System.out.println("tchat recu server");
 			}else
 				if(mes instanceof Message){
 					engineManager.receiveMessage((Message)mes);

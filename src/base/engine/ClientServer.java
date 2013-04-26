@@ -13,6 +13,8 @@ public class ClientServer {
     private Server server;
     private String pseudo = "";
     
+    private Player player;	// TODO sur ?
+    
     /**
      * Peut valoir null s'il n'est pas sur une partie
      */

@@ -49,7 +49,6 @@ public class ClientServerOut implements Runnable{
         	while(!isEmpty()){
         		try {
 					out.writeObject(poll());
-					System.out.println("clientOut envoyer");
 				} catch (IOException e) {
 					e.printStackTrace();
 					continuer=false;
