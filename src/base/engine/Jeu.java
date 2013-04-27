@@ -3,7 +3,10 @@ package base.engine;
 import java.io.File;
 import java.util.ArrayList;
 
+import base.engine.entities.HeroEntity;
+import base.engine.entities.Zombi;
 import base.engine.levels.LevelDrol;
+import base.engine.logics.Deplacement;
 import base.tile.TilePropriety;
 import base.tile.TileSet;
 import base.utils.ResourceManager;
@@ -47,6 +50,27 @@ public class Jeu extends Partie {
 		tp.add(new TilePropriety(3, false, "fonssd"));
 		
 		engineManager.setCurrentLevelUsed(new LevelDrol(new File("levels/lvl_0.lvl"), new TileSet(ResourceManager.getSpriteSheet("sprite"), tp), engineManager));
+		
+		
+		/*
+		 * 
+		 * A SUPPRIMER
+		 * 
+		 */
+		/*
+		HeroEntity hero = new HeroEntity("bla", engineManager, 500);
+		hero.setLocation(70, 70);
+		
+		Zombi z = new Zombi("zombi", engineManager, 10);
+		z.setLocation(140, 40);
+		
+		engineManager.getCurrentLevelUsed().addEntity(hero);
+		engineManager.getCurrentLevelUsed().addEntity(z);
+		Deplacement.deplacerEntity(engineManager,0, 0, hero.getId());
+		Deplacement.deplacerEntity(engineManager,0, 0, z.getId());
+		engineManager.getIA().addEntity(hero);
+		engineManager.getIA().addEntity(z);
+		//*/
 	}
 
 	@Override
@@ -71,6 +95,20 @@ public class Jeu extends Partie {
 				System.out.println("Attente load level server");
 			}
 			
+			/*
+			HeroEntity hero = new HeroEntity("bla", engineManager, 500);
+			hero.setLocation(70, 70);
+			
+			Zombi z = new Zombi("zombi", engineManager, 10);
+			z.setLocation(140, 40);
+			
+			engineManager.getCurrentLevelUsed().addEntity(hero);
+			engineManager.getCurrentLevelUsed().addEntity(z);
+			Deplacement.deplacerEntity(engineManager,0, 0, hero.getId());
+			Deplacement.deplacerEntity(engineManager,0, 0, z.getId());
+			engineManager.getIA().addEntity(hero);
+			engineManager.getIA().addEntity(z);
+			//*/
 			playingGame = true;
 			
 			engineManager.getNetworkEngine().sendToPlayersToChangeViewToGame();

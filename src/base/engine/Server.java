@@ -63,6 +63,14 @@ public class Server implements Runnable{
 	public void stopServer(){
 		continuer = false;
 		isServerOn = false;
+		
+		for(Partie v : getPartie())
+			if(v != null)
+				v.stopPartie();
+				
+		for(ClientServer v : hashClients.values())
+			if(v != null)
+				v.stopThreads();
 		try {
 			s_server.close();
 		} catch (IOException e) {

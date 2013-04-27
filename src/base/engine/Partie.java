@@ -15,7 +15,7 @@ public abstract class Partie implements Runnable{
 	 * Gere les options etc
 	 */
 	protected ClientServer host;
-	protected EngineManager engineManager = new EngineManager();
+	protected EngineManager engineManager = new EngineManager(true,true);
 	
 	protected Diffusion listeDesJoueursDansLaPartie = new Diffusion();
 	
