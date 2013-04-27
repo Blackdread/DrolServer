@@ -12,6 +12,7 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.StateBasedGame;
 
 import base.engine.Game;
+import base.engine.Jeu;
 import base.engine.Partie;
 import base.engine.Server;
 import base.engine.gui.ElementString;
@@ -136,9 +137,12 @@ public class AdministrationView extends View {
 		listeServers.clearList();
 		for(Partie v : server.getPartie())
 			if(v != null){
+				String type = "Salon";
+				if(v instanceof Jeu)
+					type = "jeu";
 				listeServers.addElement(new ElementString(container, ResourceManager.getImage("transparent").getScaledCopy(10, 
 						container.getDefaultFont().getHeight("1")+2), 0,0,
-						"Id: "+v.getId()+" Nb joueurs: "+v.getListeDesJoueursDansLaPartie().size()));
+						"Id: "+v.getId()+" Nb joueurs: "+v.getListeDesJoueursDansLaPartie().size()+" instance: "+type));
 			}
 	}
 

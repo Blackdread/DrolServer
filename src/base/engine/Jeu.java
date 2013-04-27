@@ -37,16 +37,18 @@ public class Jeu extends Partie {
 		if(engineManager.getCurrentLevelUsed() != null){
 			engineManager.getCurrentLevelUsed().loadLevel();
 		
-			while(!barriereAttenteJoueurs.isMax())
+			while(!barriereAttenteJoueurs.isMax()){
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {e.printStackTrace();}
+				System.out.println("Attente des joueurs");
+			}
 			
-			while(!engineManager.getCurrentLevelUsed().isLoadOver())
-			{
+			while(!engineManager.getCurrentLevelUsed().isLoadOver()){
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {e.printStackTrace();}
+				System.out.println("Attente load level server");
 			}
 			
 			playingGame = true;

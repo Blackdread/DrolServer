@@ -82,6 +82,7 @@ public class Server implements Runnable{
 			tmp2.start();
 		}
 	}
+	
 	/**
 	 * 
 	 * @param idPartie id partie
