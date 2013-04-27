@@ -1,5 +1,6 @@
 package base.engine;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -40,6 +41,10 @@ public class Diffusion {
     }
     synchronized public void removeClientServer(ClientServer client){
     	hash.remove(client.getId());
+    }
+    
+    synchronized public Collection<ClientServer> getClients(){
+    	return hash.values();
     }
     
     synchronized public int size(){

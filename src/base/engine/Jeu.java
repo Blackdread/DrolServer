@@ -1,5 +1,13 @@
 package base.engine;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import base.engine.levels.LevelDrol;
+import base.tile.TilePropriety;
+import base.tile.TileSet;
+import base.utils.ResourceManager;
+
 /**
 *
 * @author Yoann CAPLAIN
@@ -27,6 +35,18 @@ public class Jeu extends Partie {
 		listeDesJoueursDansLaPartie = s.getListeDesJoueursDansLaPartie();
 		continuer = true;
 		barriereAttenteJoueurs = new Barriere(0, listeDesJoueursDansLaPartie.size());
+		
+		for(ClientServer v : listeDesJoueursDansLaPartie.getClients())
+			if(v != null)
+				v.setPartie(this);
+		
+		ArrayList<TilePropriety> tp = new ArrayList<TilePropriety>();
+		tp.add(new TilePropriety(0, false, "fodfnd"));
+		tp.add(new TilePropriety(1, false, "fond"));
+		tp.add(new TilePropriety(2, true, "fodnd"));
+		tp.add(new TilePropriety(3, false, "fonssd"));
+		
+		engineManager.setCurrentLevelUsed(new LevelDrol(new File("levels/lvl_0.lvl"), new TileSet(ResourceManager.getSpriteSheet("sprite"), tp), engineManager));
 	}
 
 	@Override
@@ -41,7 +61,7 @@ public class Jeu extends Partie {
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {e.printStackTrace();}
-				System.out.println("Attente des joueurs");
+				System.out.println("Attente des joueurs "+barriereAttenteJoueurs.getCompteur());
 			}
 			
 			while(!engineManager.getCurrentLevelUsed().isLoadOver()){
@@ -67,13 +87,13 @@ public class Jeu extends Partie {
 	}
 	
 	@Override
-	public void playerJoinGame(ClientServer newPlayer) {
+	synchronized public void playerJoinGame(ClientServer newPlayer) {
 		super.playerJoinGame(newPlayer);
 		
 	}
 	
 	@Override
-	public void playerLeftGame(ClientServer leavePlayer){
+	synchronized public void playerLeftGame(ClientServer leavePlayer){
 		super.playerLeftGame(leavePlayer);
 		barriereAttenteJoueurs.decrementMaxValue();
 		

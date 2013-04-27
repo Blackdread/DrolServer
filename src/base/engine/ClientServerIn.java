@@ -55,11 +55,12 @@ public class ClientServerIn implements Runnable{
 	        		case MessageKey.I_CLIENT_END_LOADING:
 	        			if(clientServer.getPartie() != null && clientServer.getPartie() instanceof Jeu){
 	        				((Jeu)clientServer.getPartie()).playerEndedLoading(clientServer);
-	        				
+	        				System.out.println("clientIn end loading fait");
 	        				if(((Jeu)clientServer.getPartie()).isPlayingGame()){// Les joueurs jouent deja, c qqun qui rejoins de cours de partie
 	        					
 	        				}
-	        			}
+	        			}else
+	        				System.err.println("clientIn end loading null ou ce n'est pas jeu");
 	        			break;
 	        		case MessageKey.I_LAUNCH_GAME:
 	        			if(clientServer.getPartie() != null)

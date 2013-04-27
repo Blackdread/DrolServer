@@ -47,12 +47,12 @@ public abstract class Partie implements Runnable{
 	 * 
 	 * @param newPlayer
 	 */
-	public void playerJoinGame(ClientServer newPlayer){
+	synchronized public void playerJoinGame(ClientServer newPlayer){
 		listeDesJoueursDansLaPartie.addClientServer(newPlayer);
 		// TODO notifier les autres joueurs
 	}
 	
-	public void playerLeftGame(ClientServer leavePlayer){
+	synchronized public void playerLeftGame(ClientServer leavePlayer){
 		listeDesJoueursDansLaPartie.removeClientServer(leavePlayer);
 		// TODO si c le host qui part, il faut donner le host a un autre joueur, (si la partie est vide, elle est supprimer)
 		// TODO notifier les autres joueurs
