@@ -41,6 +41,7 @@ public class ClientServerIn implements Runnable{
 	    							// TODO Quand le RMI ?? pour eviter ce genre de message...
 	    							Message mes = new Message();
 	    							mes.instruction = MessageKey.I_CHANGE_VIEW_TO_SALON;
+	    							mes.engine = EngineManager.NETWORK_ENGINE;
 	    							
 	    							clientServer.getOut().receiveMessage(mes);
 	    						}

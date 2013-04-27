@@ -93,6 +93,7 @@ public class Server implements Runnable{
 		if(tmp != null){
 			tmp.playerJoinGame(client);
 			client.setPartie(tmp);
+			System.out.println("renvoie true server pour rejoindre client : "+client.getId());
 			return true;
 		}
 		return false;
