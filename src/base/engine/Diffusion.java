@@ -1,5 +1,6 @@
 package base.engine;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -49,6 +50,16 @@ public class Diffusion {
     
     synchronized public int size(){
     	return hash.size();
+    }
+    
+    synchronized public ArrayList<Player> getArrayPlayer(){
+    	ArrayList<Player> retour = new ArrayList<Player>();
+    	for(ClientServer v : hash.values()){
+    		if(v != null)
+    			retour.add(v.getPlayer());
+    	}
+    	retour.trimToSize();
+    	return retour;
     }
 
 }

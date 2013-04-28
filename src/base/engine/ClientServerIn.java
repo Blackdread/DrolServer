@@ -51,6 +51,9 @@ public class ClientServerIn implements Runnable{
 	        			break;
 	        		case MessageKey.I_LEAVE_GAME:
 	        			// TODO
+	        			if(clientServer.getPartie() == null){
+	        				clientServer.getServer().quitterPartie(clientServer.getPartie().getId(), clientServer);
+	        			}
 	        			break;
 	        		case MessageKey.I_CLIENT_END_LOADING:
 	        			if(clientServer.getPartie() != null && clientServer.getPartie() instanceof Jeu){
@@ -80,6 +83,9 @@ public class ClientServerIn implements Runnable{
         						clientServer.getPartie().getEngineManager().getNetworkEngine().sendToPlayersToChangeViewToTransition();
         					}
 	        			break;
+	        		case MessageKey.I_REFRESH_LIST_PARTIE:
+	        			clientServer.getServer().envoyerListeDesParties(clientServer);
+	        			break;
 	        		default:
 	        			if(clientServer.getPartie() != null)
 	        			{
@@ -89,6 +95,21 @@ public class ClientServerIn implements Runnable{
 	        			}
 	        			break;
 	        		}
+	        	}else if(ob instanceof Player){
+	        		
+	        		if(clientServer.getPlayer() != null)
+	        			clientServer.getPlayer().copy((Player)ob);
+	        		else{
+	        			clientServer.setPlayer(new Player(null,""));
+	        			clientServer.getPlayer().copy((Player)ob);
+	        		}
+	        		clientServer.getPlayer().setEngineManager(clientServer.getPartie().getEngineManager());
+	        		
+	        		// On renvoie au joueur son Player
+	        		clientServer.getOut().receiveMessage(clientServer.getPlayer());
+	        		// On envoie la liste des joueurs dans la partie
+	        		clientServer.getPartie().getListeDesJoueursDansLaPartie().diffTous(clientServer.getPartie().getListeDesJoueursDansLaPartie().getArrayPlayer());
+	        		
 	        	}else{
 	        		if(clientServer.getPartie() != null)
 	        			clientServer.getPartie().engineManager.getNetworkEngine().receiveMessage(ob);

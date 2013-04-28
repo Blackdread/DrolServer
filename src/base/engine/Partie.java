@@ -3,7 +3,7 @@ package base.engine;
 import org.lwjgl.Sys;
 
 /**
-*
+* A maintenir avec la classe InfoPartie qui est creer pour le cote client
 * @author Yoann CAPLAIN
 */
 public abstract class Partie implements Runnable{
@@ -49,6 +49,8 @@ public abstract class Partie implements Runnable{
 	 */
 	synchronized public void playerJoinGame(ClientServer newPlayer){
 		listeDesJoueursDansLaPartie.addClientServer(newPlayer);
+		if(host == null)
+			host = newPlayer;
 		// TODO notifier les autres joueurs
 	}
 	
@@ -56,6 +58,15 @@ public abstract class Partie implements Runnable{
 		listeDesJoueursDansLaPartie.removeClientServer(leavePlayer);
 		// TODO si c le host qui part, il faut donner le host a un autre joueur, (si la partie est vide, elle est supprimer)
 		// TODO notifier les autres joueurs
+		if(host.equals(leavePlayer)){
+			host = null;
+			if(listeDesJoueursDansLaPartie.size() >= 1)
+				for(ClientServer v : listeDesJoueursDansLaPartie.getClients())
+					if(v != null){
+						host = v;
+						break;
+					}
+		}
 	}
 	
 	public void stopPartie(){

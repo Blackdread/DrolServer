@@ -14,10 +14,10 @@ public class ClientServer {
     private Server server;
     private String pseudo = "";
     
-    private Player player;	// TODO sur ?
+    private Player player;
     
     /**
-     * Peut valoir null s'il n'est pas sur une partie
+     * Peut valoir null s'il n'est pas dans une partie
      */
     private Partie partie;
 
@@ -37,6 +37,10 @@ public class ClientServer {
         tOut.start();
     }
     
+    /**
+     * Fonction appeler lorsque la connexion avec le joueur est perdu ou qu'il a quitter tout simplement
+     * on notifie la partie, on supprime le client du server et on arrete les Threads (in et out)
+     */
     public void clientDisconnected(){
     	if(partie != null){
     		partie.playerLeftGame(this);
@@ -55,12 +59,19 @@ public class ClientServer {
 		}
 	}
     
+    /**
+     * Peut etre utile si on a tue son unite ou s'il a change d'id, etc
+     */
+    public void envoyerAuJoueurSonObjectPlayer(){
+    	out.receiveMessage(player);
+    }
+    
     public void stopThreads(){
     	in.setContinuer(false);
     	out.setContinuer(false);
     }
 
-	public void setPartie(Partie partie) {
+	synchronized public void setPartie(Partie partie) {
 		this.partie = partie;
 	}
 
@@ -86,7 +97,15 @@ public class ClientServer {
 	 /**
      * Peut valoir null s'il n'est pas sur une partie
      */
-    public Partie getPartie() {
+	synchronized public Partie getPartie() {
 		return partie;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }

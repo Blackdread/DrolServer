@@ -2,9 +2,11 @@ package base.engine;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import base.engine.network.InfoPartie;
 import base.utils.Configuration;
 
 /**
@@ -47,7 +49,7 @@ public class Server implements Runnable{
 	            System.out.println("Nouveau client: "+nameServer+" et id "+i);
 	            addClient(client);
 	            i++;
-            
+	            envoyerListeDesParties(client);
             }catch(Exception e){
             	e.printStackTrace();
             }
@@ -108,6 +110,14 @@ public class Server implements Runnable{
 		return false;
 	}
 	
+	synchronized public void quitterPartie(final int idPartie, ClientServer client){
+		Partie tmp = hashPartie.get(idPartie);
+		if(tmp != null){
+			tmp.playerLeftGame(client);
+		}
+		client.setPartie(null);
+	}
+	
 	synchronized public void lancerPartie(Salon s){
 		Runnable tmp = new Jeu(s);
 		hashPartie.remove(((Partie)tmp).getId());
@@ -117,6 +127,31 @@ public class Server implements Runnable{
 		
 		
 		s.stopPartie();
+	}
+	
+	/**
+	 * Envoie les info sur les parties
+	 * @param client le client a qui envoyer
+	 */
+	synchronized public void envoyerListeDesParties(ClientServer client){
+		ArrayList<InfoPartie> array = new ArrayList<InfoPartie>();
+		
+		for(Partie v : hashPartie.values())
+			if(v != null){
+				InfoPartie inf = new InfoPartie();
+				inf.idPartie = v.getId();
+				inf.enCoursDeJeu = ((v instanceof Jeu) ? true : false);
+				if(v.getHost() != null)
+					inf.pseudoHost = v.getHost().getPseudo();
+				inf.nbJoueur = v.getListeDesJoueursDansLaPartie().size();
+				
+				array.add(inf);
+			}
+		if(!array.isEmpty())
+			if(client.getOut() != null){
+				client.getOut().receiveMessage(array);
+			}else
+				System.err.println("flux out is null - Server send info partie");
 	}
 	
 	synchronized public void clientDisconnected(ClientServer client){
