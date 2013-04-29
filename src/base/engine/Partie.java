@@ -21,6 +21,11 @@ public abstract class Partie implements Runnable{
 	
 	protected boolean continuer = true;
 	
+	/**
+	 * True means players are playing (passed loading transition)
+	 */
+	protected boolean playingGame = false;
+	
 	public Partie(ClientServer host, int id){
 		this.host = host;
 		playerJoinGame(host);
@@ -32,6 +37,8 @@ public abstract class Partie implements Runnable{
 		long temp = getTime();
 		long stockDelta;
 		
+		int test = 0;
+		
 		while(continuer){
 			stockDelta = getTime() - temp;
 			if((int)stockDelta >= 10){
@@ -40,6 +47,17 @@ public abstract class Partie implements Runnable{
 				
 				temp = getTime();
 			}
+			//*
+			// Pas sur de vouloir faire ca, le mieux serait d'envoyer seulement les entites qui ont changes 
+			 
+			if(test >= 100000 && playingGame){
+				if(host != null){
+					host.getOut().receiveMessage(engineManager.getCurrentLevelUsed());
+				}else
+					System.err.println("host null");
+				test =0;
+			}
+			test++;//*/
 		}
 	}
 	

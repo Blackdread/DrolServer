@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 
 import base.engine.entities.HeroEntity;
-import base.engine.entities.Zombi;
+import base.engine.entities.others.filters.FilterActivatorName;
+import base.engine.entities.others.info.InfoTarget;
+import base.engine.entities.others.triggers.TriggerTeleport;
 import base.engine.levels.LevelDrol;
 import base.engine.logics.Deplacement;
 import base.tile.TilePropriety;
@@ -18,11 +20,6 @@ import base.utils.ResourceManager;
 public class Jeu extends Partie {
 
 	protected Barriere barriereAttenteJoueurs;
-	
-	/**
-	 * True means players are playing (passed loading transition)
-	 */
-	protected boolean playingGame = false;
 	
 	
 	@Deprecated
@@ -49,28 +46,9 @@ public class Jeu extends Partie {
 		tp.add(new TilePropriety(2, true, "fodnd"));
 		tp.add(new TilePropriety(3, false, "fonssd"));
 		
+		// On a qu'un level pour le moment
 		engineManager.setCurrentLevelUsed(new LevelDrol(new File("levels/lvl_0.lvl"), new TileSet(ResourceManager.getSpriteSheet("sprite"), tp), engineManager));
 		
-		
-		/*
-		 * 
-		 * A SUPPRIMER
-		 * 
-		 */
-		/*
-		HeroEntity hero = new HeroEntity("bla", engineManager, 500);
-		hero.setLocation(70, 70);
-		
-		Zombi z = new Zombi("zombi", engineManager, 10);
-		z.setLocation(140, 40);
-		
-		engineManager.getCurrentLevelUsed().addEntity(hero);
-		engineManager.getCurrentLevelUsed().addEntity(z);
-		Deplacement.deplacerEntity(engineManager,0, 0, hero.getId());
-		Deplacement.deplacerEntity(engineManager,0, 0, z.getId());
-		engineManager.getIA().addEntity(hero);
-		engineManager.getIA().addEntity(z);
-		//*/
 	}
 
 	@Override
@@ -96,19 +74,56 @@ public class Jeu extends Partie {
 			}
 			
 			/*
+			 * 
+			 * A SUPPRIMER mais on garde car on a un seul niveau pour le moment.
+			 * Plus tard il faudrait avoir un editeur et serializer le level pour ne plus avoir a faire ca
+			 * 
+			 */
+			LevelDrol lvl = engineManager.getCurrentLevelUsed();
+			
+			TriggerTeleport trGauche = new TriggerTeleport(engineManager,"teleport", lvl.getLargeurTile()+2,lvl.getHauteurTile()+2,5,lvl.getHauteurTile()*(lvl.getHauteurNiveau()-2));
+			TriggerTeleport trTeleportDroite = new TriggerTeleport(engineManager,"teleport2", lvl.getLargeurTile()*(lvl.getLargeurNiveau()-1)-5,lvl.getHauteurTile()+2,5,lvl.getHauteurTile()*(lvl.getHauteurNiveau()-2));
+			trGauche.setRemoteDestination("infotargetDroite");	
+			trTeleportDroite.setRemoteDestination("infotargetGauche");
+			
+			InfoTarget infGauche[] = new InfoTarget[6];
+			for(int i=0;i<6;i++){
+				infGauche[i] = new InfoTarget(engineManager,"infotargetGauche", lvl.getLargeurTile()*2, (lvl.getHauteurTile()+5)+(lvl.getHauteurTile()*4*i));
+				engineManager.getInfoManager().addEntity(infGauche[i]);
+				Deplacement.ajouterEntiteDansTiles(infGauche[i]);
+			}
+			
+			InfoTarget infDroite[] = new InfoTarget[6];
+			for(int i=0;i<6;i++){
+				infDroite[i] = new InfoTarget(engineManager,"infotargetDroite", lvl.getLargeurTile()*lvl.getLargeurNiveau()-lvl.getLargeurTile()*3, (lvl.getHauteurTile()+5)+(lvl.getHauteurTile()*4*i));
+				engineManager.getInfoManager().addEntity(infDroite[i]);
+				Deplacement.ajouterEntiteDansTiles(infDroite[i]);
+			}
+			
+			FilterActivatorName fil = new FilterActivatorName(engineManager,"filtername",true,"tirlinear");
+			
+			trGauche.setFilterEntityThatActivate(fil);	
+			trTeleportDroite.setFilterEntityThatActivate(fil);
+			engineManager.getFilterManager().addEntity(fil);
+			engineManager.addEntity(trGauche);
+			engineManager.addEntity(trTeleportDroite);
+			Deplacement.ajouterEntiteDansTiles(trGauche);	
+			Deplacement.ajouterEntiteDansTiles(trTeleportDroite);
+			
+			
 			HeroEntity hero = new HeroEntity("bla", engineManager, 500);
 			hero.setLocation(70, 70);
-			
-			Zombi z = new Zombi("zombi", engineManager, 10);
-			z.setLocation(140, 40);
-			
-			engineManager.getCurrentLevelUsed().addEntity(hero);
-			engineManager.getCurrentLevelUsed().addEntity(z);
+			engineManager.addEntity(hero);
 			Deplacement.deplacerEntity(engineManager,0, 0, hero.getId());
-			Deplacement.deplacerEntity(engineManager,0, 0, z.getId());
-			engineManager.getIA().addEntity(hero);
-			engineManager.getIA().addEntity(z);
-			//*/
+			
+			listeDesJoueursDansLaPartie.getArrayPlayer().get(0).setIdEntityHePlays(hero.getId());
+			
+			listeDesJoueursDansLaPartie.diffTous(listeDesJoueursDansLaPartie.getArrayPlayer().get(0));
+			/*
+			 * Fin
+			 * 
+			 */
+			
 			playingGame = true;
 			
 			engineManager.getNetworkEngine().sendToPlayersToChangeViewToGame();
