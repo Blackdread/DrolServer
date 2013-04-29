@@ -89,14 +89,14 @@ public class Jeu extends Partie {
 			InfoTarget infGauche[] = new InfoTarget[6];
 			for(int i=0;i<6;i++){
 				infGauche[i] = new InfoTarget(engineManager,"infotargetGauche", lvl.getLargeurTile()*2, (lvl.getHauteurTile()+5)+(lvl.getHauteurTile()*4*i));
-				engineManager.getInfoManager().addEntity(infGauche[i]);
+				engineManager.addEntity(infGauche[i]);
 				Deplacement.ajouterEntiteDansTiles(infGauche[i]);
 			}
 			
 			InfoTarget infDroite[] = new InfoTarget[6];
 			for(int i=0;i<6;i++){
 				infDroite[i] = new InfoTarget(engineManager,"infotargetDroite", lvl.getLargeurTile()*lvl.getLargeurNiveau()-lvl.getLargeurTile()*3, (lvl.getHauteurTile()+5)+(lvl.getHauteurTile()*4*i));
-				engineManager.getInfoManager().addEntity(infDroite[i]);
+				engineManager.addEntity(infDroite[i]);
 				Deplacement.ajouterEntiteDansTiles(infDroite[i]);
 			}
 			
@@ -104,7 +104,7 @@ public class Jeu extends Partie {
 			
 			trGauche.setFilterEntityThatActivate(fil);	
 			trTeleportDroite.setFilterEntityThatActivate(fil);
-			engineManager.getFilterManager().addEntity(fil);//
+			engineManager.addEntity(fil);
 			engineManager.addEntity(trGauche);
 			engineManager.addEntity(trTeleportDroite);
 			Deplacement.ajouterEntiteDansTiles(trGauche);	
@@ -119,6 +119,7 @@ public class Jeu extends Partie {
 			listeDesJoueursDansLaPartie.getArrayPlayer().get(0).setIdEntityHePlays(hero.getId());
 			
 			listeDesJoueursDansLaPartie.diffTous(listeDesJoueursDansLaPartie.getArrayPlayer().get(0));
+			listeDesJoueursDansLaPartie.diffTous(listeDesJoueursDansLaPartie.getArrayPlayer());
 			/*
 			 * Fin
 			 * 

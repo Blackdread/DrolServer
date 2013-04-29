@@ -27,7 +27,7 @@ public class ClientServerOut implements Runnable{
     
     synchronized public void receiveMessage(Object mes){
 		message_queue.add(mes);
-		System.out.println("clientOut recu");
+		//System.out.println("clientOut recu");
 	}
     synchronized private Object poll(){
     	return message_queue.poll();

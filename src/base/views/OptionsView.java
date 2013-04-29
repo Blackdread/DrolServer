@@ -13,16 +13,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import base.utils.Resolution;
 import base.engine.gui.ListeDeroulante;
-import base.engine.gui.Slider;
-import base.engine.EngineManager;
 import base.engine.Game;
-import base.engine.Message;
-import base.engine.MessageKey;
 import base.utils.Configuration;
 import base.utils.ResourceManager;
 
@@ -41,6 +35,7 @@ public class OptionsView extends View {
 	private ListeDeroulante listeDerTailleScreen;
 	private RoundedRectangle zone[] = new RoundedRectangle[3];
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void initResources() {
 		final int MARGIN = 30;
@@ -116,7 +111,6 @@ public class OptionsView extends View {
 	@Override
 	public void mouseReleased(int but, int x, int y) {
 		super.mouseReleased(but, x, y);
-		Message m = new Message();
 		
 		if(butQuitter.isMouseOver())
 			gotoPreviousView();
@@ -125,16 +119,6 @@ public class OptionsView extends View {
 			inverseFullscreen();
 		
 		listeDerTailleScreen.isMouseOver();
-	}
-
-	private void goToMenu() {
-		container.setMouseGrabbed(false);
-		try {
-			Configuration.saveNewConfig();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		game.enterState(Game.MAIN_MENU_VIEW_ID, new FadeOutTransition(), new FadeInTransition());
 	}
 
 	@Override

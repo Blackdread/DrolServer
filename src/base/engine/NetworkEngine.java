@@ -27,7 +27,7 @@ public class NetworkEngine extends Engine {
 					engineManager.receiveMessage((Message)mes);
 					if(((Message)mes).i_data.containsKey((MessageKey.P_ID_CLIENT)))
 						partie.getListeDesJoueursDansLaPartie().diffTousSaufEmetteur((Message)mes, ((Message)mes).i_data.get(MessageKey.P_ID_CLIENT));
-					System.out.println("message recu server");
+					//System.out.println("message recu server");
 				}
 			
 		}else

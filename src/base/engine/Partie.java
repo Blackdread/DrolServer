@@ -2,6 +2,8 @@ package base.engine;
 
 import org.lwjgl.Sys;
 
+import base.engine.entities.BasicEntity;
+
 /**
 * A maintenir avec la classe InfoPartie qui est creer pour le cote client
 * @author Yoann CAPLAIN
@@ -47,17 +49,28 @@ public abstract class Partie implements Runnable{
 				
 				temp = getTime();
 			}
-			//*
+			/* 1er test
 			// Pas sur de vouloir faire ca, le mieux serait d'envoyer seulement les entites qui ont changes 
-			 
-			if(test >= 100000 && playingGame){
+			
+			if(test >= 5 && playingGame){
 				if(host != null){
 					host.getOut().receiveMessage(engineManager.getCurrentLevelUsed());
 				}else
 					System.err.println("host null");
-				test =0;
+				test = 0;
 			}
 			test++;//*/
+			
+			//* 2eme test
+			if(test >= 5 && playingGame){
+				for(BasicEntity v : engineManager.getCurrentLevelUsed().getArrayEntite().values())
+					if(v != null)
+						listeDesJoueursDansLaPartie.diffTous(v);
+				
+				test = 0;
+			}
+			test++;
+			//*/
 		}
 	}
 	
