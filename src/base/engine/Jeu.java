@@ -104,7 +104,7 @@ public class Jeu extends Partie {
 			
 			trGauche.setFilterEntityThatActivate(fil);	
 			trTeleportDroite.setFilterEntityThatActivate(fil);
-			engineManager.getFilterManager().addEntity(fil);
+			engineManager.getFilterManager().addEntity(fil);//
 			engineManager.addEntity(trGauche);
 			engineManager.addEntity(trTeleportDroite);
 			Deplacement.ajouterEntiteDansTiles(trGauche);	

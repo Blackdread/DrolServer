@@ -29,7 +29,7 @@ public abstract class Partie implements Runnable{
 	public Partie(ClientServer host, int id){
 		this.host = host;
 		playerJoinGame(host);
-		engineManager.getNetworkEngine().setPartie(this);
+		engineManager.getNetworkEngine().setPartie(this);//
 	}
 	
 	@Override
