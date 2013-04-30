@@ -1,5 +1,7 @@
 package base.engine;
 
+import java.util.ArrayList;
+
 import org.lwjgl.Sys;
 
 import base.engine.entities.BasicEntity;
@@ -49,7 +51,7 @@ public abstract class Partie implements Runnable{
 				
 				temp = getTime();
 				
-				System.out.println("Server updated "+ (int)stockDelta);
+				//System.out.println("Server updated "+ (int)stockDelta);
 				test++;
 			}
 			/* 1er test
@@ -69,15 +71,25 @@ public abstract class Partie implements Runnable{
 				for(BasicEntity v : engineManager.getCurrentLevelUsed().getArrayEntite().values()){
 					if(v != null){
 						listeDesJoueursDansLaPartie.diffTous(v);
-						System.out.println("server "+v.getTargetName()+" "+v.getId()+" "+v.getX()+" "+v.getY());
+						//System.out.println("server "+v.getTargetName()+" "+v.getId()+" "+v.getX()+" "+v.getY());
 					}
 				}
 				
 				test = 0;
-				System.out.println("listes entite envoye "+ (int)stockDelta);
+				//System.out.println("listes entite envoye "+ (int)stockDelta);
 			}
-			
 			//*/
+			/* 3eme test
+			if(test >= 10 && playingGame){
+				ArrayList<BasicEntity> array = new ArrayList<BasicEntity>();
+				for(BasicEntity v : engineManager.getCurrentLevelUsed().getArrayEntite().values())
+					array.add(v);
+				
+				listeDesJoueursDansLaPartie.diffTous(array);
+			
+			}
+			//*/
+			
 		}
 	}
 	

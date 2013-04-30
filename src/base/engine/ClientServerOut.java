@@ -26,10 +26,11 @@ public class ClientServerOut implements Runnable{
     }
     
     synchronized public void receiveMessage(Object mes){
+    	/*
     	if(message_queue.size() > 100){
 			message_queue.clear();
 			System.err.println("**********\n**********\n**********\n**********\nVIDER SERVER\n**********\n**********\n**********\n**********\n");
-		}
+		}*/
 		message_queue.add(mes);
 		//System.out.println("clientOut recu");
 	}
@@ -53,6 +54,8 @@ public class ClientServerOut implements Runnable{
         	while(!isEmpty()){
         		try {
 					out.writeObject(poll());
+					out.flush();
+					out.reset();
 				} catch (IOException e) {
 					e.printStackTrace();
 					continuer=false;
