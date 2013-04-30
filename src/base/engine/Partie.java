@@ -67,7 +67,7 @@ public abstract class Partie implements Runnable{
 			//*/
 			
 			//* 2eme test
-			if(test >= 30 && playingGame){
+			if(test >= 20 && playingGame){
 				for(BasicEntity v : engineManager.getCurrentLevelUsed().getArrayEntite().values()){
 					if(v != null){
 						listeDesJoueursDansLaPartie.diffTous(v);

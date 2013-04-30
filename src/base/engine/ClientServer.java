@@ -2,6 +2,7 @@ package base.engine;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
 *
@@ -25,6 +26,12 @@ public class ClientServer {
     private ClientServerOut out;
     
     public ClientServer(Server ser, Socket s, int id){
+    	try {
+			s.setTcpNoDelay(true);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         this.s = s;
         server = ser;
         this.id = id;
