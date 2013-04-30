@@ -31,7 +31,7 @@ public abstract class Partie implements Runnable{
 	public Partie(ClientServer host, int id){
 		this.host = host;
 		playerJoinGame(host);
-		engineManager.getNetworkEngine().setPartie(this);//
+		engineManager.getNetworkEngine().setPartie(this);
 	}
 	
 	@Override
@@ -48,28 +48,35 @@ public abstract class Partie implements Runnable{
 				engineManager.update((int)stockDelta);
 				
 				temp = getTime();
+				
+				System.out.println("Server updated "+ (int)stockDelta);
+				test++;
 			}
 			/* 1er test
 			// Pas sur de vouloir faire ca, le mieux serait d'envoyer seulement les entites qui ont changes 
 			
-			if(test >= 5 && playingGame){
+			if(test >= 10 && playingGame){
 				if(host != null){
 					host.getOut().receiveMessage(engineManager.getCurrentLevelUsed());
 				}else
 					System.err.println("host null");
 				test = 0;
 			}
-			test++;//*/
+			//*/
 			
 			//* 2eme test
-			if(test >= 5 && playingGame){
-				for(BasicEntity v : engineManager.getCurrentLevelUsed().getArrayEntite().values())
-					if(v != null)
+			if(test >= 30 && playingGame){
+				for(BasicEntity v : engineManager.getCurrentLevelUsed().getArrayEntite().values()){
+					if(v != null){
 						listeDesJoueursDansLaPartie.diffTous(v);
+						System.out.println("server "+v.getTargetName()+" "+v.getId()+" "+v.getX()+" "+v.getY());
+					}
+				}
 				
 				test = 0;
+				System.out.println("listes entite envoye "+ (int)stockDelta);
 			}
-			test++;
+			
 			//*/
 		}
 	}
