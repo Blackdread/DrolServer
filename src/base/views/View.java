@@ -15,7 +15,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.Transition;
 
-import base.engine.EngineManager;
 import base.engine.Game;
 import base.utils.Configuration;
 
@@ -41,7 +40,7 @@ public abstract class View extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.container = container;
-		this.game = (Game) game;
+		View.game = (Game) game;
 	}
 
 	@Override
