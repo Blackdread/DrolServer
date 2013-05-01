@@ -25,15 +25,31 @@ public class ClientServerOut implements Runnable{
       this.clientServer = clientServer;
     }
     
+    /*
     synchronized public void receiveMessage(Object mes){
     	/*
     	if(message_queue.size() > 100){
 			message_queue.clear();
 			System.err.println("**********\n**********\n**********\n**********\nVIDER SERVER\n**********\n**********\n**********\n**********\n");
-		}*/
+		}
 		message_queue.add(mes);
 		//System.out.println("clientOut recu");
-	}
+	}*/
+    
+    synchronized public void envoyer(Object o)
+    {
+    	
+		try {
+			out.writeObject(o);
+			out.flush();
+			out.reset();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+    }
+    
     synchronized private Object poll(){
     	return message_queue.poll();
     }

@@ -149,7 +149,8 @@ public class Server implements Runnable{
 			}
 		if(!array.isEmpty())
 			if(client.getOut() != null){
-				client.getOut().receiveMessage(array);
+				//client.getOut().receiveMessage(array);
+				client.getOut().envoyer(array);
 			}else
 				System.err.println("flux out is null - Server send info partie");
 	}

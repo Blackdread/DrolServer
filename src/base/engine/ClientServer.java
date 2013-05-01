@@ -68,9 +68,11 @@ public class ClientServer {
     
     /**
      * Peut etre utile si on a tue son unite ou s'il a change d'id, etc
+     * @throws IOException 
      */
-    public void envoyerAuJoueurSonObjectPlayer(){
-    	out.receiveMessage(player);
+    public void envoyerAuJoueurSonObjectPlayer() throws IOException{
+    	//out.receiveMessage(player);
+    	out.envoyer(player);
     }
     
     public void stopThreads(){

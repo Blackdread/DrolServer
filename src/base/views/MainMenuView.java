@@ -12,6 +12,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import base.engine.Game;
+import base.engine.levels.LevelManager;
 import base.utils.ResourceManager;
 
 
@@ -28,6 +29,7 @@ public class MainMenuView extends View {
 
 	private Image background;
 	MouseOverArea butAdmin, butOption, butQuitter, butCredits;
+	boolean doOnce;
 
 	@Override
 	public void initResources() {
@@ -52,6 +54,7 @@ public class MainMenuView extends View {
 		
 		butQuitter = new MouseOverArea(container, ResourceManager.getImage("MenuQuitter"), x, y+haut*4-50, larg, haut);
 		butQuitter.setMouseOverImage(ResourceManager.getImage("MenuQuitterOver"));
+		
 	}
 
 	@Override

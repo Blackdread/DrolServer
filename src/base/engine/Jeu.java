@@ -1,6 +1,7 @@
 package base.engine;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import base.engine.entities.HeroEntity;

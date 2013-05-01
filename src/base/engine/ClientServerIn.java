@@ -43,7 +43,8 @@ public class ClientServerIn implements Runnable{
 	    							mes.instruction = MessageKey.I_CHANGE_VIEW_TO_SALON;
 	    							mes.engine = EngineManager.NETWORK_ENGINE;
 	    							
-	    							clientServer.getOut().receiveMessage(mes);
+	    							//clientServer.getOut().receiveMessage(mes);
+	    							clientServer.getOut().envoyer(mes);
 	    						}
 	    						//TODO envoyer au client toute les informations sur la partie
 	    					}
@@ -106,7 +107,8 @@ public class ClientServerIn implements Runnable{
 	        		clientServer.getPlayer().setEngineManager(clientServer.getPartie().getEngineManager());
 	        		
 	        		// On renvoie au joueur son Player
-	        		clientServer.getOut().receiveMessage(clientServer.getPlayer());
+	        		//clientServer.getOut().receiveMessage(clientServer.getPlayer());
+	        		clientServer.getOut().envoyer(clientServer.getPlayer());
 	        		// On envoie la liste des joueurs dans la partie
 	        		clientServer.getPartie().getListeDesJoueursDansLaPartie().diffTous(clientServer.getPartie().getListeDesJoueursDansLaPartie().getArrayPlayer());
 	        		

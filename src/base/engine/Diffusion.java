@@ -1,5 +1,6 @@
 package base.engine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,7 +22,8 @@ public class Diffusion {
         for(Entry<Integer, ClientServer> v : hash.entrySet()){
             if(v != null && v.getValue() != null)
                 if(v.getValue().getOut() != null)
-                	v.getValue().getOut().receiveMessage(mes);
+                	//v.getValue().getOut().receiveMessage(mes);
+                	v.getValue().getOut().envoyer(mes);
         }
         
     }
@@ -31,7 +33,8 @@ public class Diffusion {
             if(v != null && v.getValue() != null)
                 if(v.getKey() != id)
                     if(v.getValue().getOut() != null){
-                    	v.getValue().getOut().receiveMessage(mes);
+                    	//v.getValue().getOut().receiveMessage(mes);
+                    	v.getValue().getOut().envoyer(mes);
                     }
         }
         

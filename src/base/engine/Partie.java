@@ -1,5 +1,7 @@
 package base.engine;
 
+import java.io.IOException;
+
 import org.lwjgl.Sys;
 
 import base.engine.entities.BasicEntity;
@@ -65,10 +67,15 @@ public abstract class Partie implements Runnable{
 			//*/
 			
 			//* 2eme test
-			if(test >= 20 && playingGame){
+			if(test >= 50 && playingGame){
 				for(BasicEntity v : engineManager.getCurrentLevelUsed().getArrayEntite().values()){
 					if(v != null){
-						listeDesJoueursDansLaPartie.diffTous(v);
+						try {
+							listeDesJoueursDansLaPartie.diffTous(v);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						//System.out.println("server "+v.getTargetName()+" "+v.getId()+" "+v.getX()+" "+v.getY());
 					}
 				}
