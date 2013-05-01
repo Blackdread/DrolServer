@@ -1,7 +1,5 @@
 package base.engine;
 
-import java.util.ArrayList;
-
 import org.lwjgl.Sys;
 
 import base.engine.entities.BasicEntity;
@@ -80,12 +78,24 @@ public abstract class Partie implements Runnable{
 			}
 			//*/
 			/* 3eme test
-			if(test >= 10 && playingGame){
+			if(test >= 20 && playingGame){
 				ArrayList<BasicEntity> array = new ArrayList<BasicEntity>();
 				for(BasicEntity v : engineManager.getCurrentLevelUsed().getArrayEntite().values())
 					array.add(v);
+						
+				listeDesJoueursDansLaPartie.diffTous( engineManager.getCurrentLevelUsed().getArrayEntite());
+			
+			}
+			//*/
+			/* 4eme test
+			if(test >= 20 && playingGame){
+				//HashMap<Integer, BasicEntity> hash = new HashMap<Integer, BasicEntity>();
+				//hash.putAll(engineManager.getCurrentLevelUsed().getArrayEntite());
 				
-				listeDesJoueursDansLaPartie.diffTous(array);
+				HashMap<Integer, BasicEntity> hash = engineManager.getCurrentLevelUsed().getArrayEntite();
+				
+						
+				listeDesJoueursDansLaPartie.diffTous(hash);
 			
 			}
 			//*/
@@ -108,7 +118,7 @@ public abstract class Partie implements Runnable{
 		listeDesJoueursDansLaPartie.removeClientServer(leavePlayer);
 		// TODO si c le host qui part, il faut donner le host a un autre joueur, (si la partie est vide, elle est supprimer)
 		// TODO notifier les autres joueurs
-		if(host.equals(leavePlayer)){
+		if(host.getId() == leavePlayer.getId()){
 			host = null;
 			if(listeDesJoueursDansLaPartie.size() >= 1)
 				for(ClientServer v : listeDesJoueursDansLaPartie.getClients())
