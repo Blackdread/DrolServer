@@ -12,7 +12,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import base.engine.Game;
-import base.engine.levels.LevelManager;
 import base.utils.ResourceManager;
 
 
@@ -28,7 +27,7 @@ import base.utils.ResourceManager;
 public class MainMenuView extends View {
 
 	private Image background;
-	MouseOverArea butAdmin, butOption, butQuitter, butCredits;
+	private MouseOverArea butAdmin, butOption, butQuitter, butCredits;
 	boolean doOnce;
 
 	@Override

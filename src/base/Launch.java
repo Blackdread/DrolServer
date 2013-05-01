@@ -19,8 +19,12 @@ public class Launch {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			Game g = new Game("config/config.properties", "libs/resources.jar");
-			//Game g = new Game("config/config.properties", "resources/");
+			Game g;
+			if(System.getProperties().getProperty("os.name").equalsIgnoreCase("Mac OS X"))
+				g = new Game("config/config.properties", "resources/");
+			else
+				g = new Game("config/config.properties", "libs/resources.jar");
+			
 			g.launch();
 		} catch (IOException e) {
 			e.printStackTrace();
